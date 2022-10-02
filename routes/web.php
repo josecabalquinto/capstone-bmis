@@ -36,21 +36,26 @@ require __DIR__ . '/auth.php';
 
 Route::get('/foods', [FoodController::class, 'foods'])->name('food.foods');
 Route::post('/food', [FoodController::class, 'store'])->name('food.store');
+Route::post('/food-qty/{food}', [FoodController::class, 'addQty'])->name('food.addQty');
 Route::delete('/food/{food}', [FoodController::class, 'destroy'])->name('food.destroy');
 
 Route::get('/distribute-food-create', [FoodDistributionController::class, 'create'])->name('distribute.create');
 Route::get('/food-distributions', [FoodDistributionController::class, 'index'])->name('distribute.index');
 Route::get('/food-distribution-details/{foodDistribution}', [FoodDistributionController::class, 'show'])->name('distribute.show');
 Route::post('/distribute-food', [FoodDistributionController::class, 'store'])->name('distribute.store');
+Route::delete('/food-distribution/{foodDistribution}', [FoodDistributionController::class, 'destroy'])->name('distribute.destroy');
+Route::get('/food-distributions-filter', [FoodDistributionController::class, 'filter'])->name('distribute.filter');
 
 Route::get('/vitamins', [VitaminController::class, 'index'])->name('vitamin.index');
 Route::post('/vitamin', [VitaminController::class, 'store'])->name('vitamin.store');
 Route::delete('/vitamin/{vitamin}', [VitaminController::class, 'destroy'])->name('vitamin.destroy');
+Route::post('/vitamin-qty/{vitamin}', [VitaminController::class, 'addQty'])->name('vitamin.addQty');
 
 Route::get('/distribute-vitamin-create', [VitaminDistributionController::class, 'create'])->name('distributevit.create');
 Route::get('/vitamin-distributions', [VitaminDistributionController::class, 'index'])->name('distributevit.index');
 Route::get('/vitamin-distribution-details/{vitaminDistribution}', [VitaminDistributionController::class, 'show'])->name('distributevit.show');
 Route::post('/distribute-vitamin', [VitaminDistributionController::class, 'store'])->name('distributevit.store');
+Route::post('/distribute-vitamin-filter', [VitaminDistributionController::class, 'filter'])->name('distributevit.filter');
 
 Route::get('/puroks', [PurokController::class, 'index'])->name('purok.index');
 Route::post('/purok', [PurokController::class, 'store'])->name('purok.store');

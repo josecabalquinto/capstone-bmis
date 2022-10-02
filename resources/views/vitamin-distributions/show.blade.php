@@ -27,7 +27,7 @@
                     <div class="form-group row">
                         <label for="food_id" class="col-sm-2 col-form-label">Distributor</label>
                         <div class="col-sm-10">
-                            <input type="text" readonly value="{{ ucwords('asd') }}" class="form-control">
+                            <input type="text" readonly value="{{ ucwords($vd->distributor) }}" class="form-control">
                         </div>
                     </div>
 
@@ -56,14 +56,18 @@
                         <table id="puroksTable" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Child Name</th>
+                                    <th>Beneficiaries/Children</th>
                                 </tr>
                             </thead>
+
+                            @php
+                                $ctr = 1;
+                            @endphp
 
                             <tbody>
                                 @foreach ($beneficiaries as $b)
                                     <tr>
-                                        <td>{{ ucwords($b->fullname) }}</td>
+                                        <td><i class="text-muted">{{ $ctr }}</i>. {{ ucwords($b->fullname) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

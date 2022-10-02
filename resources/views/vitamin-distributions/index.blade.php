@@ -24,8 +24,23 @@
                 </div>
                 <div class="card-body table-responsive">
 
-                    <a href="{{ route('distributevit.create') }}" class="btn btn-sm btn-primary float-right mx-1">Distribute
-                        Vitamin</a>
+                    <div>
+                        <form action="{{ route('distributevit.filter') }}" method="post">
+                            @csrf
+                            <div class="input-group input-group-sm">
+                                <input type="date" name="from" class="form-control col-md-2 col-12">
+                                <input type="date" name="to" class="form-control col-md-2 col-12">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-info btn-flat">FILTER</button>
+                                </span>
+                                <a href="{{ route('distributevit.create') }}"
+                                    class="btn btn-sm btn-primary float-right mx-1">Distribute
+                                    Vitamin</a>
+                            </div>
+                        </form>
+
+                    </div>
+
 
 
 
@@ -35,6 +50,7 @@
                             <tr>
                                 <th>Distributor</th>
                                 <th>Vitamin</th>
+                                <th>Quantity</th>
                                 <th>Purok</th>
                                 <th>Date Distributed</th>
                                 <th>Remarks</th>
@@ -47,6 +63,7 @@
                                 <tr>
                                     <td>{{ ucwords($vd->distributor) }}</td>
                                     <td>{{ ucwords($vd->vitamin) }}</td>
+                                    <td>{{ number_format($vd->quantity) }}</td>
                                     <td>{{ ucwords($vd->purok) }}</td>
                                     <td>{{ $vd->created_at }}</td>
                                     <td>{{ ucwords($vd->remarks) }}</td>

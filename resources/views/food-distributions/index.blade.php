@@ -24,8 +24,20 @@
                 </div>
                 <div class="card-body table-responsive">
 
-                    <a href="{{ route('distribute.create') }}" class="btn btn-sm btn-primary float-right mx-1">Distribute
-                        Food</a>
+                    <form action="{{ route('distributevit.filter') }}" method="post">
+                        @csrf
+                        <div class="input-group input-group-sm">
+                            <input type="date" name="from" class="form-control col-md-2 col-12">
+                            <input type="date" name="to" class="form-control col-md-2 col-12">
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-info btn-flat">FILTER</button>
+                            </span>
+                            <a href="{{ route('distribute.create') }}"
+                                class="btn btn-sm btn-primary float-right mx-1">Distribute
+                                Food</a>
+
+                        </div>
+                    </form>
 
 
 
@@ -35,6 +47,7 @@
                             <tr>
                                 <th>Distributor</th>
                                 <th>Food</th>
+                                <th>Quantity</th>
                                 <th>Purok</th>
                                 <th>Date Distributed</th>
                                 <th>Remarks</th>
@@ -47,6 +60,7 @@
                                 <tr>
                                     <td>{{ ucwords($fd->distributor) }}</td>
                                     <td>{{ ucwords($fd->food) }}</td>
+                                    <td>{{ number_format($fd->quantity) }}</td>
                                     <td>{{ ucwords($fd->purok) }}</td>
                                     <td>{{ $fd->created_at }}</td>
                                     <td>{{ ucwords($fd->remarks) }}</td>
@@ -59,7 +73,7 @@
                                         </button>
 
                                         <form id="formDelete{{ $fd->id }}"
-                                            action="{{ route('food.destroy', $fd->id) }}" method="post">
+                                            action="{{ route('distribute.destroy', $fd->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                         </form>

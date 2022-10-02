@@ -28,13 +28,15 @@ class VitaminController extends Controller
     {
         $this->validate($request, [
             'vitamin' => 'required|string|unique:vitamins,vitamin',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'quantity' => 'numeric'
         ]);
 
         $data = array(
             'vitamin' =>  strtolower($request->vitamin),
             'description' =>  strtolower($request->description),
-            'added_by' => Auth::user()->name
+            'added_by' => Auth::user()->name,
+            'quantity' => $request->quantity
         );
 
         Vitamin::create($data);
@@ -45,5 +47,12 @@ class VitaminController extends Controller
     {
         $vitamin->delete();
         return redirect()->back()->with('destroy', 1);
+    }
+
+    public function addQty(Vitamin $vitamin, Request $request)
+    {
+        $vitamin->quantity = $vitamin->quantity + (int) $request->quantity;
+        $vitamin->save();
+        return redirect()->back()->with('add_qty', 1);
     }
 }

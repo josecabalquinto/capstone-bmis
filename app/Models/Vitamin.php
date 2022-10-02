@@ -9,5 +9,5 @@ class Vitamin extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['vitamin', 'description'];
+    protected $fillable = ['vitamin', 'description', 'quantity'];
 }

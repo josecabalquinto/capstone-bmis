@@ -9,5 +9,5 @@ class FoodDistribution extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['purok_id', 'food_id', 'distributor', 'remarks'];
+    protected $fillable = ['purok_id', 'food_id', 'distributor', 'remarks', 'quantity'];
 }

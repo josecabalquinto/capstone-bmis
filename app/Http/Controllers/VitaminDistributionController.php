@@ -31,6 +31,23 @@ class VitaminDistributionController extends Controller
         return view('vitamin-distributions.index', $data);
     }
 
+    public function filter(Request $request)
+    {
+        $from = date($request->from);
+        $to = date($request->to);
+        $data = array(
+            'vds'   => DB::table('vitamin_distributions')
+                ->join('puroks', 'vitamin_distributions.purok_id', '=', 'puroks.id')
+                ->join('vitamins', 'vitamin_distributions.vitamin_id', '=', 'vitamins.id')
+                ->whereBetween('vitamin_distributions.created_at', [$from, $to])
+                ->select('vitamin_distributions.*', 'puroks.purok', 'vitamins.vitamin')
+                ->get()
+        );
+
+
+        return view('vitamin-distributions.index', $data);
+    }
+
     public function show(VitaminDistribution $vitaminDistribution)
     {
         $vd = DB::table('vitamin_distributions')
@@ -70,6 +87,18 @@ class VitaminDistributionController extends Controller
             'vitamin_id'       =>  'required'
         ]);
 
+        $children = Children::where('purok_id', $request->purok_id)->get();
+
+        $vit_qty = Vitamin::find($request->vitamin_id);
+
+
+        if ($vit_qty->quantity < $request->quantity) {
+            return redirect()->back()->with('qty_er', 1);
+        } else {
+            $vit_qty->quantity = $vit_qty->quantity - $request->quantity;
+            $vit_qty->save();
+        }
+
         $vd = VitaminDistribution::create($request->all());
         $children = Children::where('purok_id', $request->purok_id)->get();
 
@@ -83,5 +112,12 @@ class VitaminDistributionController extends Controller
             DistributionDetails::create($data);
         }
         return redirect()->back()->with('create', 1);
+    }
+
+    public function deductQty($qty, $vit_id)
+    {
+        return Vitamin::where('id', $vit_id)->update([
+            'quantity' => $qty
+        ]);
     }
 }

@@ -9,5 +9,5 @@ class VitaminDistribution extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['distributor', 'remarks', 'purok_id', 'vitamin_id'];
+    protected $fillable = ['distributor', 'remarks', 'purok_id', 'vitamin_id', 'quantity'];
 }

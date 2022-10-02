@@ -11,5 +11,5 @@ class Food extends Model
 
     protected $table = "foods";
 
-    protected $fillable = ['food', 'description'];
+    protected $fillable = ['food', 'description', 'quantity'];
 }

@@ -53,6 +53,16 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="quantity" class="col-sm-2 col-form-label">Quantity *</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" min="1" name="quantity">
+                                @error('quantity')
+                                    {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="purok_id" class="col-sm-2 col-form-label">Purok *</label>
                             <div class="col-sm-10">
                                 <select name="purok_id" id="purok_id" class="form-control" required>
@@ -70,7 +80,7 @@
                         <div class="form-group row">
                             <label for="food_id" class="col-sm-2 col-form-label">Remarks</label>
                             <div class="col-sm-10">
-                                <textarea name="remarks" class="form-control" id="" cols="30" rows="10">{{ old('remarks') }}</textarea>
+                                <textarea required name="remarks" class="form-control" id="" cols="30" rows="10">{{ old('remarks') }}</textarea>
                                 @error('remarks')
                                     {{ $message }}
                                 @enderror
@@ -116,6 +126,20 @@
                     position: 'top-end',
                     icon: 'success',
                     title: 'Vitamin distribution has been added.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            });
+        </script>
+    @endif
+
+    @if (session('qty_er'))
+        <script>
+            $(function() {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Not enough stock.',
                     showConfirmButton: false,
                     timer: 1500
                 })

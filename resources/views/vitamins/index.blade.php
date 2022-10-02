@@ -64,6 +64,18 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" value="{{ old('quantity') }}"
+                                                    name="quantity" id="quantity" min="0">
+
+                                                @error('quantity')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                 </div>
                                 <div class="modal-footer justify-content-center">
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -81,6 +93,7 @@
                             <tr>
                                 <th>Vitamin</th>
                                 <th>Description</th>
+                                <th>Quantity</th>
                                 <th>Date Encoded</th>
                                 <th>Action</th>
                             </tr>
@@ -91,9 +104,64 @@
                                 <tr>
                                     <td>{{ ucwords($vitamin->vitamin) }}</td>
                                     <td>{{ ucwords($vitamin->description) }}</td>
+                                    <td>
+
+                                        <span class="font-weight-bold">
+                                            {{ number_format($vitamin->quantity) }}
+                                        </span>
+                                        <button class="btn btn-sm btn-default float-left mr-4" data-toggle="modal"
+                                            data-target="#modalQty{{ $vitamin->id }}">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+
+
+                                        <div class="modal fade" data-backdrop="static" id="modalQty{{ $vitamin->id }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Add Qauntity for <span
+                                                                class="text-muted font-italic">{{ ucwords($vitamin->vitamin) }}</span>
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ route('vitamin.addQty', $vitamin->id) }}"
+                                                            method="post">
+                                                            @csrf
+
+                                                            <div class="form-group row">
+                                                                <label for="quantity"
+                                                                    class="col-sm-2 col-form-label">Quantity *</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="number" class="form-control"
+                                                                        value="{{ old('quantity') }}" name="quantity"
+                                                                        id="quantity" min="0">
+
+                                                                    @error('quantity')
+                                                                        {{ $message }}
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+
+                                                    </div>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="submit" class="btn btn-success">ADD</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+
+                                    </td>
                                     <td>{{ $vitamin->created_at }}</td>
                                     <td>
-                                        <button data-id="{{ $vitamin->id }}" class="btn btn-sm btn-danger btnDeletePurok">
+                                        <button data-id="{{ $vitamin->id }}"
+                                            class="btn btn-sm btn-danger btnDeletePurok">
                                             <i class="fa fa-trash"></i>
                                         </button>
 
@@ -172,6 +240,20 @@
                     position: 'top-end',
                     icon: 'success',
                     title: 'New Vitamin has been added.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            });
+        </script>
+    @endif
+
+    @if (session('add_qty'))
+        <script>
+            $(function() {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Quantity has been updated successfully.',
                     showConfirmButton: false,
                     timer: 1500
                 })
